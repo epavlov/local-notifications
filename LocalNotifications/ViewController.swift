@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 1. Request permission to notify user
+        // 1. REQUEST PERMISSION TO NOTIFY USER
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
             if granted {
                 print("Notifications access granted")
@@ -43,6 +43,16 @@ class ViewController: UIViewController {
         notif.title = "New notification"
         notif.subtitle = "Test project"
         notif.body = "Test of new notifications in iOS 10. All your base are belong to us."
+        
+        // 1.3.1 Add attachment to notification
+        guard let imageURL = Bundle.main.url(forResource: "cat", withExtension: "gif") else {
+            completion(false)
+            return
+        }
+        
+        let attachment = try! UNNotificationAttachment(identifier: "myNotification", url: imageURL, options: .none)
+        
+        notif.attachments = [attachment]
         
         // 1.4 Add notification trigger
         let notifTrigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
