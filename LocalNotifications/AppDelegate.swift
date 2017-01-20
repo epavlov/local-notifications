@@ -51,7 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Function to configure user category
     // indentifier comes from info.plist
     private func configureUserNotifications() {
-        let category = UNNotificationCategory(identifier: "myNotificationCategory", actions: [], intentIdentifiers: [], options: [])
+        
+        // 3. CREATE ACTION BUTTONS FOR USER NOTIFICATION
+        let favAction = UNNotificationAction(identifier: "fistBump", title: "👊 Fist Bump", options: [])
+        let dissmissAction = UNNotificationAction(identifier: "dismiss", title: "🚫 Dissmiss", options: [])
+        
+        // Add category
+        let category = UNNotificationCategory(identifier: "myNotificationCategory", actions: [favAction, dissmissAction], intentIdentifiers: [], options: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
     }
 }
@@ -60,6 +66,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler(.alert)
+    }
+    
+    // 3.1 Implement function that takes care of notification actions buttons tap functionality
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        // DO THE MAGIC HERE
+        // But for now just print()
+        print("Responce received for \(response.actionIdentifier)")
+        completionHandler()
     }
 }
 
