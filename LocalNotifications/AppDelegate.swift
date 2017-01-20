@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 2.1 Assign UNUserNotificationCenter delegate to selfß
         UNUserNotificationCenter.current().delegate = self
         
+        // 2.2 Configure categories for User Notifications
+        configureUserNotifications()
+        
         return true
     }
 
@@ -44,8 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    // Function to configure user category
+    // indentifier comes from info.plist
+    private func configureUserNotifications() {
+        let category = UNNotificationCategory(identifier: "myNotificationCategory", actions: [], intentIdentifiers: [], options: [])
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+    }
 }
 
 // 2. ADD APPDELEGATE EXTENSION TO ALLOW NOTIFICATIONS TO BE DISPLAYED IN APP FOREGROUND
